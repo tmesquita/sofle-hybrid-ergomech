@@ -6,7 +6,6 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
@@ -47,6 +46,24 @@
             tapping-term-ms = <200>;
             flavor = "hold-preferred";
         };
+
+        mod_nav_left: mod_nav_left {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_NAV_LEFT";
+            bindings = <&kp LA(LEFT)>, <&kp LG(LEFT)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LGUI|MOD_RGUI)>;
+        };
+
+        mod_right_nav: mod_right_nav {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_RIGHT_NAV";
+            bindings = <&kp LA(RIGHT)>, <&kp LG(RIGHT)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LGUI|MOD_RGUI)>;
+        };
     };
 
     keymap {
@@ -63,12 +80,12 @@
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
             bindings = <
-&trans                      &trans  &trans  &trans            &trans  &trans   &trans     &trans   &trans                  &trans    &trans         &none
-&kp GRAVE                   &kp Q   &kp W   &kp E             &kp R   &kp T    &kp Y      &kp U    &kp I                   &kp O     &kp P          &kp BSPC
-&tap_hold LEFT_CONTROL TAB  &kp A   &kp S   &kp D             &kp F   &kp G    &kp H      &kp J    &kp K                   &kp L     &kp SEMI       &kp SQT
-&kp LSHFT                   &kp Z   &kp X   &kp C             &kp V   &kp B    &kp N      &kp M    &kp COMMA               &kp DOT   &kp FSLH       &tap_hold RIGHT_SHIFT MINUS
-&kp C_MUTE                  &trans  &trans  &kp LEFT_COMMAND  &mo 1   &kp RET  &kp SPACE  &mo 2    &tap_hold LEFT_ALT ESC  &trans    &trans
-                                                                               &kp ENTER  &kp END  &kp PAGE_UP             &kp HOME  &kp PAGE_DOWN
+&trans                      &trans  &trans  &trans            &trans     &trans   &trans       &trans           &trans                  &trans    &trans         &none
+&kp GRAVE                   &kp Q   &kp W   &kp E             &kp R      &kp T    &kp Y        &kp U            &kp I                   &kp O     &kp P          &kp BSPC
+&tap_hold LEFT_CONTROL TAB  &kp A   &kp S   &kp D             &kp F      &kp G    &kp H        &kp J            &kp K                   &kp L     &kp SEMI       &kp SQT
+&kp LSHFT                   &kp Z   &kp X   &kp C             &kp V      &kp B    &kp N        &kp M            &kp COMMA               &kp DOT   &kp FSLH       &tap_hold RIGHT_SHIFT MINUS
+&kp C_MUTE                  &trans  &trans  &kp LEFT_COMMAND  &lt 1 DEL  &kp RET  &lt 1 SPACE  &lt 2 BACKSPACE  &tap_hold LEFT_ALT ESC  &trans    &trans
+                                                                                  &kp ENTER    &kp END          &kp PAGE_UP             &kp HOME  &kp PAGE_DOWN
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -76,12 +93,12 @@
 
         numbols {
             bindings = <
-&trans  &trans      &trans       &trans     &trans                &trans                 &trans  &trans  &trans  &trans  &trans         &trans
-&trans  &kp DOLLAR  &kp ASTRK    &kp POUND  &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &trans  &kp N7  &kp N8  &kp N9  &trans         &trans
-&trans  &kp EXCL    &kp PERCENT  &kp AMPS   &kp EQUAL             &kp AT                 &trans  &kp N4  &kp N5  &kp N6  &trans         &kp PIPE
-&trans  &kp CARET   &trans       &trans     &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp N0  &kp N1  &kp N2  &kp N3  &kp BACKSLASH  &trans
-&trans  &trans      &trans       &trans     &trans                &trans                 &trans  &trans  &trans  &trans  &trans
-                                                                                         &trans  &trans  &trans  &trans  &trans
+&trans  &trans      &trans       &trans        &trans                &trans                 &trans     &trans  &trans  &trans  &trans         &trans
+&trans  &kp DOLLAR  &kp AT       &kp POUND     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp MINUS  &kp N7  &kp N8  &kp N9  &trans         &trans
+&trans  &kp EXCL    &kp PERCENT  &kp AMPS      &kp EQUAL             &kp PIPE               &kp PLUS   &kp N4  &kp N5  &kp N6  &trans         &kp PIPE
+&trans  &kp CARET   &trans       &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp N0     &kp N1  &kp N2  &kp N3  &kp BACKSLASH  &trans
+&trans  &trans      &trans       &trans        &trans                &trans                 &trans     &trans  &trans  &trans  &trans
+                                                                                            &trans     &trans  &trans  &trans  &trans
             >;
 
             label = "Numbols";
@@ -98,12 +115,12 @@
             //                |      |       |       |      |      |  |      |      |      |       |      |
 
             bindings = <
-&trans  &trans                &trans            &trans            &trans            &trans      &trans     &trans        &trans    &trans         &trans  &trans
-&trans  &kp LG(N1)            &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)  &kp PG_UP  &kp LA(LEFT)  &kp UP    &kp LA(RIGHT)  &none   &kp DEL
-&trans  &kp LG(LA(NUMBER_1))  &kp LG(LA(N2))    &kp LG(LA(N3))    &kp LA(LG(N4))    &trans      &kp PG_DN  &kp LEFT      &kp DOWN  &kp RIGHT      &none   &kp BSPC
-&trans  &kp K_UNDO            &kp K_CUT         &kp K_COPY        &kp K_PASTE       &trans      &trans     &trans        &trans    &trans         &trans  &trans
-&trans  &trans                &trans            &trans            &trans            &trans      &trans     &trans        &trans    &trans         &trans
-                                                                                                &kp A      &kp B         &kp C     &kp D          &kp E
+&trans  &trans                &trans            &trans            &trans            &trans      &trans       &trans         &trans    &trans          &trans       &trans
+&trans  &kp LG(N1)            &kp LG(NUMBER_2)  &kp LG(NUMBER_3)  &kp LG(NUMBER_4)  &kp LG(N5)  &kp HOME     &mod_nav_left  &kp UP    &mod_right_nav  &none        &trans
+&trans  &kp LG(LA(NUMBER_1))  &kp LG(LA(N2))    &kp LG(LA(N3))    &kp LA(LG(N4))    &trans      &kp END      &kp LEFT       &kp DOWN  &kp RIGHT       &kp K_CUT    &trans
+&trans  &kp K_UNDO            &kp K_CUT         &kp K_COPY        &kp K_PASTE       &trans      &kp PAGE_UP  &kp PAGE_DOWN  &trans    &trans          &kp K_PASTE  &trans
+&trans  &trans                &trans            &trans            &trans            &trans      &trans       &trans         &trans    &trans          &trans
+                                                                                                &kp A        &kp B          &kp C     &kp D           &kp E
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -119,12 +136,12 @@
 
             label = "adjust";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none  &none  &none  &none  &none  &none
-&ext_power EP_TOG  &out OUT_BLE  &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
-&none              &none         &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
-&none              &none         &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
-&rgb_ug RGB_TOG    &none         &none         &none         &none         &none         &none  &none  &none  &none  &none
-                                                                                         &kp A  &kp B  &kp C  &kp D  &kp E
+&none            &none         &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
+&bt BT_CLR       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none  &none  &none  &none  &none  &none
+&out OUT_BLE     &none         &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
+&none            &none         &none         &none         &none         &none         &none  &none  &none  &none  &none  &none
+&rgb_ug RGB_TOG  &none         &none         &none         &none         &none         &none  &none  &none  &none  &none
+                                                                                       &kp A  &kp B  &kp C  &kp D  &kp E
             >;
         };
 
