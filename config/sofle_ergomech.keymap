@@ -37,13 +37,40 @@
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
         };
+
+        mod_nav_left: mod_nav_left {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_NAV_LEFT";
+            bindings = <&kp LA(LEFT)>, <&kp LG(LEFT_ARROW)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LGUI|MOD_RGUI)>;
+        };
+
+        mod_nav_right: mod_nav_right {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MOD_NAV_RIGHT";
+            bindings = <&kp LA(RIGHT)>, <&kp LG(RIGHT)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LGUI|MOD_RGUI)>;
+        };
+
+        hold_tap: hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOLD_TAP";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-            label = "default";
+        mac {
+            label = "Mac";
 
             // ------------------------------------------------------------------------------------------------------------
             // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |       |
@@ -64,8 +91,8 @@
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        lower_layer {
-            label = "lower";
+        numbols {
+            label = "Numbols";
 
             // TODO: Some binds are waiting for shifted keycode support.
             // ------------------------------------------------------------------------------------------------------------
@@ -87,8 +114,8 @@
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        Nav {
-            label = "raise";
+        nav {
+            label = "Nav";
 
             // ------------------------------------------------------------------------------------------------------------
             // | BTCLR | BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |      |      |       |      |       |       |
@@ -119,12 +146,12 @@
 
             label = "adjust";
             bindings = <
-&bt BT_CLR         &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_SEL 4     &none  &none  &none  &none  &none  &none
-&ext_power EP_TOG  &rgb_ug RGB_HUD  &rgb_ug RGB_HUI  &rgb_ug RGB_SAD  &rgb_ug RGB_SAI  &rgb_ug RGB_EFF  &none  &none  &none  &none  &none  &none
-&caps_word         &rgb_ug RGB_BRD  &rgb_ug RGB_BRI  &none            &none            &none            &none  &none  &none  &none  &none  &none
-&none              &none            &none            &none            &none            &none            &none  &none  &none  &none  &none  &none
-&rgb_ug RGB_TOG    &none            &none            &none            &none            &none            &none  &none  &none  &none  &none
-                                                                                                        &kp A  &kp B  &kp C  &kp D  &kp E
+&bt BT_CLR         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none  &none   &none   &none   &none  &none
+&ext_power EP_TOG  &trans        &trans        &trans        &trans        &trans        &none  &kp F7  &kp F8  &kp F9  &none  &none
+&caps_word         &trans        &trans        &none         &none         &none         &none  &kp F4  &kp F5  &kp F6  &none  &none
+&none              &none         &none         &none         &none         &none         &none  &kp F1  &kp F2  &kp F3  &none  &none
+&rgb_ug RGB_TOG    &none         &none         &none         &none         &none         &none  &none   &none   &none   &none
+                                                                                         &kp A  &kp B   &kp C   &kp D   &kp E
             >;
         };
     };
